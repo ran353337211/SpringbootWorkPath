@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <!--聚合工程，在聚合工程中，添加我们的模型-->
+    <packaging>pom</packaging>
+    <modules>
+        <module>Springboot_001</module>
+        <module>SSM_shop</module>
+    </modules>
+    <!--项目信息 组织名称 项目名称-->
+    <groupId>com.tfswufe.springboot</groupId>
+    <artifactId>SpringbootWorkPath</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <!--通过maven继承方式，添加依赖-->
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.9.RELEASE</version>
+    </parent>
+</project>

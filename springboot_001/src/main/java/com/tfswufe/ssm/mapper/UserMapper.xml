@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- mybatis通过读取该映射文件-通过namespace找到对应的mapper接口，创建mapper接口的实现类 -->
+<mapper namespace="com.tfswufe.ssm.mapper.UserMapper">
+    <select id="getAllUser" resultType="User">
+        select * from users;
+    </select>
+    <select id="getCountBySex" resultType="java.lang.String">
+        select sex,COUNT(*) from users GROUP BY sex;
+    </select>
+    <select id="getUserById" resultType="User" parameterType="java.lang.Integer">
+        select * from users where id = #{id};
+    </select>
+    <select id="getBillById" resultType="Bill" parameterType="java.lang.Integer">
+        select * from bill where id = #{id};
+    </select>
+    <select id="getBillByNotice" resultType="Bill" parameterType="java.lang.String">
+        select * from bill where notice like "%"#{notice}"%";
+    </select>
+    <select id="getUserByNameAndPwd" resultType="User" parameterType="User">
+        select *from users
+<!--         where name = #{name} and pwd = #{pwd};-->
+        <where>
+            <if test="name!=null and name!=''">
+                and name = #{name}
+            </if>
+            <if test="pwd!=null and pwd!=''">
+                and pwd = #{pwd}
+            </if>
+        </where>
+    </select>
+</mapper>

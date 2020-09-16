@@ -1,0 +1,36 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.0.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
+	http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.0.xsd">
+
+<!--mybatis框架spring整合；
+	spring框架来管理mybatis框架自动生成mapper接口实现类-->
+	<!--1.定义数据源：管理连接池——mybatis框架的session工厂-->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+	<!--在spring容器中，创建DruidDataSource对象，并进行管理-->
+	<!--通过设值注入参数，在实例化DruidDataSource对象时需要-->
+		<property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+		<property name="url" value="jdbc:mysql://localhost:3306/smbms?useUnicode=true&amp;characterEncoding=utf-8&amp;serverTimezone=GMT%2B8&amp;useSSL=false"/>
+		<property name="username" value="root"/>
+		<property name="password" value="123"/>
+	</bean>
+	<!--spring整合mabatis框架
+	mybatis：通过映射文件，注解 创建mapper接口实现类A
+	spring：创建A类对象，并添加map容器中，进行管理-->
+	<bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!--通过setDataSource（DataSource dataSource）注入数据源（连接对象），创建mybatis的SqlSessionFactory对象-->
+		<property name="dataSource" ref="dataSource"></property>
+		<!--如果有mybatis配合文件，才注入mybatis配置-->
+	</bean>
+	<!--spring管理mybatis的mapper接口实现类
+	3种方式，使用mapper包扫描的方式-->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="com.tfswufe.mapper"></property>
+		<property name="sqlSessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<!--在spring的容器，创建了mybatis框架生成的mapper接口对象-->
+</beans>
